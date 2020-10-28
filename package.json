@@ -37,11 +37,15 @@
   ],
   "main": "lib/index.js",
   "scripts": {
+    "build": "echo nothing to build",
     "coverage": "nyc node ./test/run",
     "heroku-postbuild": "npm install mongodb@^3.0.0 openid-client@^3.0.0",
     "lint": "eslint lib example certification test",
     "lint-fix": "eslint lib example certification test --fix",
-    "test": "node ./test/run"
+    "test": "npm run lint && npm run coverage",
+    "preversion": "npm test && npm run build",
+    "postversion": "git push origin master --follow-tags",
+    "prepublishOnly": "npm test && npm run build"
   },
   "dependencies": {
     "@koa/cors": "^3.0.0",
